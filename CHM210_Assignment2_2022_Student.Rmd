@@ -1,0 +1,211 @@
+---
+title: "CHM210 Assignment 2"
+output:
+  pdf_document:
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+In this assignment we will be exploring the chemistry of air quality by looking at the relationship between two common pollutants: ozone ($O_3$) and nitrogen dioxide ($NO_2$). You will be using different mathematical and graphical functions to generate plots and summary statistics of air quality data in Toronto from different seasons. You will also be responsible for answering some questions about the relationship between $O_3$ and $NO_2$, which pertain to lecture material from this course. Some of you may have performed similar tasks during CHM135 using Excel, however, you will be doing all of this using the R programming language. 
+
+As a reminder, if students are unsure of R coding fundamentals, they are encouraged to read Chapters 1-3 of the [*R for Environmental Chemistry*](https://davidrosshall.github.io/R4EnvChem/) textbook.
+
+
+## Importing the required packages 
+
+To complete this assignment, students are expected to need to utilize the following packages: `tidyverse`, `zoo`, `ggpmisc`, and `openxlsx`. RStudio should provide a prompt for you to install any of the packages needed, but you can run the following code to install those packages if needed.
+
+```{r install-tidy, eval = FALSE}
+install.packages("tidyverse")
+install.packages("zoo")
+install.packages("ggpmisc")
+install.packages("openxlsx")
+```
+
+If already installed, or once having been installed, students should load these packages in the code block below:
+
+```{r load-tidy, message = FALSE, warning = FALSE}
+
+x <- c("tidyverse", "zoo", "ggpmisc", "openxlsx")
+
+lapply(x, library, character.only = TRUE)
+```
+
+\newpage
+
+# Assignment Questions
+
+1. Please submit your answers both in your completed `.Rmd` file, as well as in a formatted `.pdf` document to MarkUs. Also submit your data set files (that you downloaded from MarkUs).
+
+## Winter Air Quality
+
+2. Import your data set for the winter months, and format it appropriately for use in this assignment using your experiences from the first assignment and the posted tutorials and in-class explanations. These steps should include:
+a) Ensuring the date column is formatted as a date object
+b) removing any error-coded data that may be present in your data file.
+
+**Store the table in a variable called `winter`.**
+
+```{r import-data-format-remove-errors}
+#For files using excel date formatting, use convertToDateTime() as shown below to convert to a date object.
+winter <- read.csv("YOURFILENAME.CSV", sep = ",")
+winter$date <- convertToDateTime(winter$Date, origin = "1900-01-01")
+
+```
+
+
+3. In the space below, record the starting date for your winter dataset. When you submit your assignment, please be sure to upload your winter data file to MarkUs.
+
+
+
+#4. Using a method of your choice, create a new column in your data-frame called `Ox` (representing $O_X$, or "odd oxygen"), which is equal to the sum of the $NO_2$ and $O_3$ concentrations.
+
+```{r create-winter-oddOx}
+winter$Ox <- NA
+
+```
+
+
+5. Using `ggplot()`, plot a time series of your winter $NO_2$, $O_3$, and $O_X$ concentrations over the seven day period covered by your data file. This figure should include properly formatted axis labels, and a descriptive title. Please ensure your submitted .pdf file contains your plot.
+
+```{r plot-winter-time-series}
+
+```
+
+
+6. Do you observe any patterns in your time series? What factors (atmospheric chemistry, anthropogenic activity, etc) might contribute to your observations?
+
+
+
+7. Calculate the mean, standard deviation, and relative standard deviation of $NO_2$, $O_3$, and $O_X$ in your winter data set, and report them in a table like that shown below.
+
+Pollutant| Mean   | Std. Deviation  | RSD
+---------|--------|-----------------|-----|
+O3       | Data   | Data            |Data
+NO2      | Data   | Data            |Data
+Ox       | Data   | Data            |Data
+
+```{r calculate-winter-summary-statistics}
+
+
+```
+
+
+8. Which pollutant ($O_3$, $NO_2$, or $O_X$) has the smallest relative standard deviation? Please explain with reference to the atmospheric chemistry involved.
+
+
+
+9. Plot a correlation plot for $NO_2$ and $O_3$ for your winter data set. Be sure to include the equation for the trend line and $R^2$ value on the plot. Please ensure your submitted .pdf file contains your plot.
+
+```{r winter-correlation-plot}
+
+
+#Note that you may find the following code snippet useful to format the R2 value on the plot:
+stat_poly_eq(aes(label =  paste(stat(eq.label), stat(rr.label), sep = "*\", \"*")),
+               formula = y ~ x, rr.digits = 4 , parse = TRUE, label.y = 0.05, size = 3)
+```
+
+
+10. Are $NO_2$ and $O_3$ positively correlated or negatively correlated in your winter dataset? Does the direction of the correlation make sense given what you know about the involvement of $NO_2$ in $O_3$ production and destruction mechanisms?
+
+
+
+## Summer Air Quality
+
+11. Import your data set for the summer months, and format it appropriately, as in question 2.
+
+**Store the table in a variable called `summer`.**
+
+```{r summer-data-import-format-remove-errors}
+summer <- read.csv("YOURFILENAME.CSV", sep = ",")
+summer$date <- convertToDateTime(summer$Date, origin = "1900-01-01")
+
+```
+
+
+12. In the space below, record the starting date for your summer dataset. When you submit your assignment, please be sure to upload your summer data file to MarkUs.
+
+
+
+13. Using a method of your choice, create a new column in your data-frame $O_X$, or "odd oxygen", which is equal to the sum of the $NO_2$ and $O_3$ concentrations.
+
+```{r summer-create-oddOx}
+summer$Ox <- NULL
+
+```
+
+
+14. Plot a time series of your summer $NO_2$, $O_3$, and $O_X$ concentrations over the seven day period covered by your data file. This figure should include properly formatted axis labels, and a descriptive title. Please ensure your submitted .pdf file contains your plot.
+
+```{r summer-plot-time-series}
+
+
+```
+
+
+15. Compare your time series from Q14 with the one you created in Q5. Are there patterns visible in your data? Are they similar or different to those you described in Q6?
+
+
+16. Calculate the mean, standard deviation, and relative standard deviation of $NO_2$, $O_3$, and $O_X$ in your summer data set, and report them in a table like that shown below.
+
+Pollutant| Mean   | Std. Deviation  | RSD
+---------|--------|-----------------|-----|
+O3       | Data   | Data            |Data
+NO2      | Data   | Data            |Data
+Ox       | Data   | Data            |Data
+
+
+```{r summer-summary-statistics}
+
+
+```
+
+
+
+17. Is $O_3$ a larger or smaller proportion of $O_X$ at your site in the summer or winter? Provide an explanation for this seasonality. 
+
+
+
+18. Plot a correlation plot for $NO_2$ and $O_3$ for your summer data set. Be sure to include the equation for the trend line and $R^2$ value on the plot. Please ensure your submitted .pdf file contains your plot.
+
+```{r summer-correlation-plot}
+
+```
+
+
+19. Are $NO_2$ and $O_3$ positively correlated or negatively correlated in your summer dataset? Does the direction of the correlation make sense given what you know about the involvement of $NO_2$ in $O_3$ production and destruction mechanisms? If the $R^2$ value differs by more than 0.05 from your answer in question 10, is the $R^2$ value larger or smaller? Comment on what factors might influence a stronger or weaker correlation between $NO_2$ and $O_3$ in the summer compared to the winter.
+
+
+
+## Air Quality Standards
+
+20. Calculate the highest concentration of $O_3$ in both of your data sets, and store these values as **wmax** and **smax** for the winter and summer values respectively. Do either of these concentrations exceed the 1-hour provincial air quality standard of 80 ppb?
+
+```{r maximum O3 concentration}
+wmax <- NULL
+print(wmax)
+
+smax <- NULL
+print(smax)
+```
+
+
+21. Calculate the highest 8-hour mean $O_3$ concentration in both of your data sets, and store these values as **rollwinter** and **rollsummer** for the winter and summer values respectively. Do either of these highest 8-hour mean values exceed the federal air quality standard of 63 ppb?
+
+```{r maximum-8-hour-mean}
+rollwinter <- NULL
+
+rollsummer <- NULL
+
+```
+
+
+## Conceptual Questions
+
+22. "Odd" oxygen as conceptualized by the sum of $O$ and $O_3$ makes sense, as both $O$ and $O_3$ contain an odd number of $O$ atoms, while molecular $O_2$ contains an even number of $O$ atoms. 
+
+By analogy, one might expect that $NO$ should be an $O_X$ species, while $NO_2$, with two $O$ atoms, is "even" $O$. However, in fact $NO_2$ contributes to $O_X$, while $NO$ does not. Justify the categorization of tropospheric $NO_2$ as an odd oxygen species. You may find it useful in your explanation to compare the reactions common in the cycling of $O_X$ in the stratosphere with those common in the cycling of $O_X$ in the troposphere.
